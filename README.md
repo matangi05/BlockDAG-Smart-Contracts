@@ -62,7 +62,6 @@ GigDAG is a blockchain-based solution built to bridge the trust gap in freelanci
    cd backend
    npm run dev
    ```
-   The backend will start on [http://localhost:3001](http://localhost:3001).
 
 2. **Serve the Frontend**
    - Use the Live Server extension in VSCode or any static server to serve the root directory. For example:
@@ -91,4 +90,4 @@ The main contract (`backend/blockchain/SmartContract.sol`) is an escrow between 
 
 ## 📄 License
 
-MIT
+This project is licensed under the MIT License.
