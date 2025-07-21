@@ -78,39 +78,39 @@
     const BLOCKDAG_TESTNET_CHAINID = '0x413'; // 1043 in hex
 
     // Wallet connect logic
-    // async function connectWallet() {
-    //   if (!window.ethereum) {
-    //     alert('MetaMask is not installed!');
-    //     return;
-    //   }
-    //   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    //   currentAccount = accounts[0];
-    //   document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
-    //   // Check Fantom testnet
-    //   const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    //   document.getElementById('networkWarning').style.display = (chainId !== BLOCKDAG_TESTNET_CHAINID) ? '' : 'none';
-    //   updateUI();
-    // }
-
     async function connectWallet() {
-  // BYPASS WALLET for UI styling
-  currentAccount = "0x1234567890abcdef1234567890abcdef12345678"; // fake address
-  document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
-  document.getElementById('networkWarning').style.display = 'none';
-  updateUI();
-}
+      if (!window.ethereum) {
+        alert('MetaMask is not installed!');
+        return;
+      }
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      currentAccount = accounts[0];
+      document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
+      // Check Fantom testnet
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      document.getElementById('networkWarning').style.display = (chainId !== BLOCKDAG_TESTNET_CHAINID) ? '' : 'none';
+      updateUI();
+    }
 
-localStorage.setItem('contractDetails', JSON.stringify({
-  description: "Sample contract",
-  from: { name: "Client", address: "0x1234567890abcdef1234567890abcdef12345678" },
-  to: { name: "Freelancer", address: "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd" },
-  deliverables: "Sample deliverables",
-  deadline: "2024-12-31",
-  payment: "1000 BDAG",
-  milestones: "50% upfront, 50% on delivery",
-  penalties: "Full refund if not delivered",
-  status: "pending"
-}));
+//     async function connectWallet() {
+//   // BYPASS WALLET for UI styling
+//   currentAccount = "0x1234567890abcdef1234567890abcdef12345678"; // fake address
+//   document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
+//   document.getElementById('networkWarning').style.display = 'none';
+//   updateUI();
+// }
+
+// localStorage.setItem('contractDetails', JSON.stringify({
+//   description: "Sample contract",
+//   from: { name: "Client", address: "0x1234567890abcdef1234567890abcdef12345678" },
+//   to: { name: "Freelancer", address: "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd" },
+//   deliverables: "Sample deliverables",
+//   deadline: "2024-12-31",
+//   payment: "1000 BDAG",
+//   milestones: "50% upfront, 50% on delivery",
+//   penalties: "Full refund if not delivered",
+//   status: "pending"
+// }));
 
     document.getElementById('connectWalletBtn').onclick = connectWallet;
 
