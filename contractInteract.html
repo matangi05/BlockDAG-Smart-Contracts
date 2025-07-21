@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contract Interaction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <style>
+  <!-- <style>
     body { font-family: Arial, sans-serif; margin: 2em; }
     .container { max-width: 600px; margin: auto; }
     .section { margin-bottom: 2em; padding: 1em; border: 1px solid #ccc; border-radius: 8px; }
@@ -16,21 +17,21 @@
     button { padding: 0.5em 1em; margin-top: 1em; }
     label { display: block; margin-top: 1em; }
     input[type=text], input[type=date] { width: 100%; padding: 0.5em; margin-top: 0.5em; }
-  </style>
+  </style> -->
 </head>
 <body>
-  <div class="container">
+  <div class="contract-interact-container">
     <h1>Contract Interaction</h1>
-    <div id="wallet-section" class="section">
+    <div id="wallet-section" class="contract-interact-section">
       <button id="connectWalletBtn">Connect MetaMask Wallet</button>
-      <div id="walletAddress" class="address"></div>
+      <div id="walletAddress" class="contract-interact-address"></div>
       <div id="networkWarning" style="color: red; display: none;">
         Please switch to BlockDAG Testnet in MetaMask.
         <button id="switchNetworkBtn" style="margin-left: 10px; padding: 5px 10px;">Switch to BlockDAG</button>
       </div>
     </div>
 
-    <div id="contract-section" class="section hidden">
+    <div id="contract-section" class="contract-interact-section hidden">
       <h2>Contract Details</h2>
       <div id="debugInfo" style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 12px;">
         <strong>Debug Info:</strong><br>
@@ -40,27 +41,29 @@
         <span id="debugIsClient">Is Client: </span>
       </div>
       <div><b>Description:</b> <span id="desc"></span></div>
-      <div><b>Client:</b> <span id="clientAddr" class="address"></span></div>
-      <div><b>Freelancer:</b> <span id="freelancerAddr" class="address"></span></div>
+      <div><b>Client:</b> <span id="clientAddr" class="contract-interact-address"></span></div>
+      <div><b>Freelancer:</b> <span id="freelancerAddr" class="contract-interact-address"></span></div>
       <div><b>Deliverables:</b> <span id="deliverables"></span></div>
       <div><b>Deadline:</b> <span id="deadline"></span></div>
       <div><b>Payment:</b> <span id="payment"></span></div>
       <div><b>Milestones:</b> <span id="milestones"></span></div>
       <div><b>Penalties:</b> <span id="penalties"></span></div>
       <div><b>Status:</b> <span id="status"></span></div>
-      <div id="progressContainer">
+      <div id="progressContainer" class="contract-interact-progress-container">
         <b>Deadline Progress:</b>
-        <div class="progress-bar"><div id="progressBar" class="progress"></div></div>
+        <div class="contract-interact-progress-bar"><div id="progressBar" class="contract-interact-progress"></div></div>
         <div id="daysLeft"></div>
       </div>
+      <div class="contract-interact-btn-row">
       <div id="clientActions" class="hidden">
-        <button id="approveBtn">Approve Contract (Simulate Escrow)</button>
+        <button id="approveBtn" class="submit-btn">Approve Contract (Simulate Escrow)</button>
       </div>
       <div id="freelancerActions" class="hidden">
-        <button id="withdrawBtn">Withdraw Funds (Simulate Release)</button>
+        <button id="withdrawBtn" class="submit-btn">Withdraw Funds (Simulate Release)</button>
+      </div>
       </div>
     </div>
-    <div id="notParticipant" class="section hidden" style="color: red;">You are not a participant in this contract.</div>
+    <div id="notParticipant" class="contract-interact-not-participant hidden" style="color: red;">You are not a participant in this contract.</div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.9/dist/ethers.umd.min.js"></script>
@@ -75,19 +78,39 @@
     const BLOCKDAG_TESTNET_CHAINID = '0x413'; // 1043 in hex
 
     // Wallet connect logic
+    // async function connectWallet() {
+    //   if (!window.ethereum) {
+    //     alert('MetaMask is not installed!');
+    //     return;
+    //   }
+    //   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    //   currentAccount = accounts[0];
+    //   document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
+    //   // Check Fantom testnet
+    //   const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    //   document.getElementById('networkWarning').style.display = (chainId !== BLOCKDAG_TESTNET_CHAINID) ? '' : 'none';
+    //   updateUI();
+    // }
+
     async function connectWallet() {
-      if (!window.ethereum) {
-        alert('MetaMask is not installed!');
-        return;
-      }
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      currentAccount = accounts[0];
-      document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
-      // Check Fantom testnet
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      document.getElementById('networkWarning').style.display = (chainId !== BLOCKDAG_TESTNET_CHAINID) ? '' : 'none';
-      updateUI();
-    }
+  // BYPASS WALLET for UI styling
+  currentAccount = "0x1234567890abcdef1234567890abcdef12345678"; // fake address
+  document.getElementById('walletAddress').textContent = 'Connected: ' + currentAccount;
+  document.getElementById('networkWarning').style.display = 'none';
+  updateUI();
+}
+
+localStorage.setItem('contractDetails', JSON.stringify({
+  description: "Sample contract",
+  from: { name: "Client", address: "0x1234567890abcdef1234567890abcdef12345678" },
+  to: { name: "Freelancer", address: "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd" },
+  deliverables: "Sample deliverables",
+  deadline: "2024-12-31",
+  payment: "1000 BDAG",
+  milestones: "50% upfront, 50% on delivery",
+  penalties: "Full refund if not delivered",
+  status: "pending"
+}));
 
     document.getElementById('connectWalletBtn').onclick = connectWallet;
 
