@@ -12,6 +12,7 @@ contract SmartContract {
     string public penalties;
     bool public isFunded;
     bool public isWithdrawn;
+    string public pdfHash;
 
     constructor(
         address _client,
@@ -21,7 +22,8 @@ contract SmartContract {
         string memory _deliverables,
         string memory _deadline,
         string memory _milestones,
-        string memory _penalties
+        string memory _penalties,
+        string memory _pdfHash
     ) {
         client = _client;
         freelancer = _freelancer;
@@ -33,6 +35,7 @@ contract SmartContract {
         penalties = _penalties;
         isFunded = false;
         isWithdrawn = false;
+        pdfHash = _pdfHash;
     }
 
     // Client deposits the agreed amount (escrow)
