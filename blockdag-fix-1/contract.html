@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Smart Contract Generator - Contract</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-logo">AI Smart Contract Generator</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><button class="wallet-btn" disabled>Connect Wallet</button></li>
+    </ul>
+  </nav>
+  <main class="main-layout">
+    <section class="form-section" id="contract-form">
+      <form class="contract-form">
+        <div class="form-group">
+          <label for="description">Natural Language Description</label>
+          <textarea id="description" name="description" placeholder="e.g., 'Hire Arjun to build a landing page for ₹10,000 with delivery in 5 days'" required></textarea>
+        </div>
+        <!-- Removed Parties Involved input box -->
+        <div class="form-group">
+          <label for="fromName">From (Client Name)</label>
+          <input type="text" id="fromName" name="fromName" placeholder="Client Name" />
+        </div>
+        <div class="form-group">
+          <label for="from">From Wallet Address (Client)</label>
+          <input type="text" id="from" name="from" placeholder="0x..." />
+        </div>
+        <div class="form-group">
+          <label for="toName">To (Freelancer Name)</label>
+          <input type="text" id="toName" name="toName" placeholder="Freelancer Name" />
+        </div>
+        <div class="form-group">
+          <label for="to">To Wallet Address (Freelancer)</label>
+          <input type="text" id="to" name="to" placeholder="0x..." />
+        </div>
+        <div class="form-group">
+          <label for="deliverables">Deliverables</label>
+          <input type="text" id="deliverables" name="deliverables" placeholder="Landing page, UI design" required />
+        </div>
+        <div class="form-group">
+          <label for="deadline">Deadline</label>
+          <input type="date" id="deadline" name="deadline" required />
+        </div>
+        <div class="form-group">
+          <label for="payment">Payment Terms</label>
+          <input type="text" id="payment" name="payment" placeholder="₹10,000 on completion" required />
+        </div>
+        <div class="form-group">
+          <label for="milestones">Milestones</label>
+          <input type="text" id="milestones" name="milestones" placeholder="50% upfront, 50% after delivery" />
+        </div>
+        <div class="form-group">
+          <label for="penalties">Penalties / Refund Clauses</label>
+          <input type="text" id="penalties" name="penalties" placeholder="Full refund if not delivered in 5 days" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">Submit</button>
+        </div>
+        <!-- Placeholder: On submit, simulate Parsing... → Smart Contract Generated → Ready for Deployment -->
+      </form>
+    </section>
+    <aside class="contract-preview">
+      <h2>Contract Preview</h2>
+      <div class="preview-content">
+        <!-- Placeholder: Live contract summary updates as user fills form (JS to be added) -->
+        <div class="contract-summary">
+          <p><strong>Description:</strong> <span class="preview-description">(Your contract description will appear here)</span></p>
+          <p><strong>From:</strong> <span class="preview-from">(From party will appear here)</span></p>
+          <p><strong>To:</strong> <span class="preview-to">(To party will appear here)</span></p>
+          <p><strong>Deliverables:</strong> <span class="preview-deliverables">(Deliverables will appear here)</span></p>
+          <p><strong>Deadline:</strong> <span class="preview-deadline">(Deadline will appear here)</span></p>
+          <p><strong>Payment:</strong> <span class="preview-payment">(Payment terms will appear here)</span></p>
+          <p><strong>Milestones:</strong> <span class="preview-milestones">(Milestones will appear here)</span></p>
+          <p><strong>Penalties:</strong> <span class="preview-penalties">(Penalties/refund clauses will appear here)</span></p>
+        </div>
+        <div class="solidity-preview">
+          <h3>Sample Solidity Contract</h3>
+          <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SmartContract {
+    address public client;
+    address public freelancer;
+    uint public amount;
+    // ...
+    // (Sample contract logic here) 
+}
+</code></pre>
+        </div>
+      </div>
+      <div class="center">
+      
+      </div>
+    </aside>
+  </main> 
+
+  <footer>
+    <p>Built for Hackathons | Blockchain-ready | AI-powered</p>
+  </footer>
+  <script>
+    // Prefill form fields from localStorage (if available)
+    window.addEventListener('DOMContentLoaded', function() {
+      const details = JSON.parse(localStorage.getItem('contractDetails') || '{}');
+      if (details) {
+        if (details.description) document.getElementById('description').value = details.description;
+        // Prefill from/to names from Gemini JSON, leave addresses empty
+        if (details.from) {
+          if (typeof details.from === 'object' && details.from.name) {
+            document.getElementById('fromName').value = details.from.name;
+          } else if (typeof details.from === 'string') {
+            document.getElementById('fromName').value = details.from;
+          }
+        }
+        if (details.to) {
+          if (typeof details.to === 'object' && details.to.name) {
+            document.getElementById('toName').value = details.to.name;
+          } else if (typeof details.to === 'string') {
+            document.getElementById('toName').value = details.to;
+          }
+        }
+        // Do not prefill address boxes
+        if (details.deliverables) document.getElementById('deliverables').value = details.deliverables;
+        if (details.deadline) {
+          // Try to parse date if possible
+          const deadlineInput = document.getElementById('deadline');
+          const dateMatch = details.deadline.match(/\d{4}-\d{2}-\d{2}/);
+          if (dateMatch) {
+            deadlineInput.value = dateMatch[0];
+          } else {
+            deadlineInput.value = '';
+            deadlineInput.placeholder = details.deadline;
+          }
+        }
+        if (details.payment) document.getElementById('payment').value = details.payment;
+        if (details.milestones) document.getElementById('milestones').value = details.milestones;
+        if (details.penalties) document.getElementById('penalties').value = details.penalties;
+      }
+      // Live preview update
+      const updatePreview = () => {
+        document.querySelector('.preview-description').textContent = document.getElementById('description').value || '(Your contract description will appear here)';
+        document.querySelector('.preview-from').textContent = (document.getElementById('fromName').value || '(From name)') + ' - ' + (document.getElementById('from').value || '(From wallet address)');
+        document.querySelector('.preview-to').textContent = (document.getElementById('toName').value || '(To name)') + ' - ' + (document.getElementById('to').value || '(To wallet address)');
+        document.querySelector('.preview-deliverables').textContent = document.getElementById('deliverables').value || '(Deliverables will appear here)';
+        document.querySelector('.preview-deadline').textContent = document.getElementById('deadline').value || document.getElementById('deadline').placeholder || '(Deadline will appear here)';
+        document.querySelector('.preview-payment').textContent = document.getElementById('payment').value || '(Payment terms will appear here)';
+        document.querySelector('.preview-milestones').textContent = document.getElementById('milestones').value || '(Milestones will appear here)';
+        document.querySelector('.preview-penalties').textContent = document.getElementById('penalties').value || '(Penalties/refund clauses will appear here)';
+      };
+      document.querySelectorAll('.contract-form input, .contract-form textarea').forEach(el => {
+        el.addEventListener('input', updatePreview);
+      });
+      updatePreview();
+
+      // Handle form submit - only save to localStorage and redirect
+      document.querySelector('.contract-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const contractDetails = {
+          description: document.getElementById('description').value,
+          from: {
+            name: document.getElementById('fromName').value,
+            address: document.getElementById('from').value
+          },
+          to: {
+            name: document.getElementById('toName').value,
+            address: document.getElementById('to').value
+          },
+          deliverables: document.getElementById('deliverables').value,
+          deadline: document.getElementById('deadline').value,
+          payment: document.getElementById('payment').value,
+          milestones: document.getElementById('milestones').value,
+          penalties: document.getElementById('penalties').value
+        };
+        localStorage.setItem('contractDetails', JSON.stringify(contractDetails));
+        window.location.href = 'deploy.html';
+      });
+    });
+  </script>
+</body>
+</html> 

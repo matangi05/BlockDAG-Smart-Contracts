@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Smart Contract Generator - Input</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-logo">AI Smart Contract Generator</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><button class="wallet-btn" disabled>Connect Wallet</button></li>
+    </ul>
+  </nav>
+  <main class="main-layout">
+    <section class="form-section" id="input-section">
+      <h2>Describe Your Contract</h2>
+      <p>Type or speak the terms of your contract in plain English. We'll extract the key details for you!</p>
+      <div class="form-group">
+        <label for="contractInput">Contract Terms</label>
+        <textarea id="contractInput" placeholder="e.g., 'Hire Arjun to build a landing page for ₹10,000 with delivery in 5 days'"></textarea>
+      </div>
+      <div class="form-actions">
+        <button id="speakBtn" type="button">🎤 Speak</button>
+        <button id="nextBtn" type="button" class="submit-btn">Next</button>
+      </div>
+      <div id="speechStatus" style="margin-top:10px;color:#666;"></div>
+    </section>
+  </main>
+  <footer>
+    <p>Built for Hackathons | Blockchain-ready | AI-powered</p>
+  </footer>
+  <script src="input.js"></script>
+</body>
+</html> 
