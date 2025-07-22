@@ -10,14 +10,14 @@ GigDAG is a blockchain-based solution built to bridge the trust gap in freelanci
 - **AI Extraction:** Uses Google Gemini API to extract structured contract details
 - **Legal Contract Generation:** Produces a formal legal-style contract (MoU) as a PDF
 - **Smart Contract Generation:** Generates and deploys a Solidity smart contract for escrow between client and freelancer
-- **Blockchain Deployment:** Deploys contracts to the BlockDAG Testnet
+- **Blockchain Deployment:** Deploys contracts to the BlockDAG Testnet and generated PDF to Pinata’s cloud service
 - **Web Interface:** User-friendly frontend for contract creation, preview, PDF generation, and blockchain deployment
 
 ## 🛠️ Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Node.js, Express.js
-- **Blockchain:** Solidity, Hardhat, Ethers.js, BlockDAG Testnet, MetaMask
+- **Blockchain:** Solidity, Hardhat, Ethers.js, BlockDAG Testnet, MetaMask, Pinata 
 - **AI Integration:** Google Gemini API (for contract detail extraction and legal text generation)
 - **PDF Generation:** PDFKit (Node.js)
 
@@ -29,6 +29,7 @@ GigDAG is a blockchain-based solution built to bridge the trust gap in freelanci
 - [npm](https://www.npmjs.com/)
 - [MetaMask](https://metamask.io/) (for blockchain interaction)
 - Google Gemini API key (for AI extraction)
+- Pinata API key (for Cloud Storage of document) 
 
 
 ## ⚙️ Installation
