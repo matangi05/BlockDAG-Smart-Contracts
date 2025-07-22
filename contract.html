@@ -29,10 +29,12 @@
         <div class="form-group">
           <label for="from">From (Party Offering Contract)</label>
           <input type="text" id="from" name="from" placeholder="e.g., Aakrit (The Bbarn)" required />
+          <input type="text" id="fromAddress" name="fromAddress" placeholder="From wallet address" required />
         </div>
         <div class="form-group">
           <label for="to">To (Party Receiving Contract)</label>
           <input type="text" id="to" name="to" placeholder="e.g., District by Zomato" required />
+          <input type="text" id="toAddress" name="toAddress" placeholder="To wallet address" required />
         </div>
         <div class="form-group">
           <label for="deliverables">Deliverables</label>
@@ -104,22 +106,10 @@ contract SmartContract {
       const details = JSON.parse(localStorage.getItem('contractDetails') || '{}');
       if (details) {
         if (details.description) document.getElementById('description').value = details.description;
-        // Prefill from/to names from Gemini JSON, leave addresses empty
-        if (details.from) {
-          if (typeof details.from === 'object' && details.from.name) {
-            document.getElementById('fromName').value = details.from.name;
-          } else if (typeof details.from === 'string') {
-            document.getElementById('fromName').value = details.from;
-          }
-        }
-        if (details.to) {
-          if (typeof details.to === 'object' && details.to.name) {
-            document.getElementById('toName').value = details.to.name;
-          } else if (typeof details.to === 'string') {
-            document.getElementById('toName').value = details.to;
-          }
-        }
-        // Do not prefill address boxes
+        if (details.from) document.getElementById('from').value = details.from;
+        if (details.fromAddress) document.getElementById('fromAddress').value = details.fromAddress;
+        if (details.to) document.getElementById('to').value = details.to;
+        if (details.toAddress) document.getElementById('toAddress').value = details.toAddress;
         if (details.deliverables) document.getElementById('deliverables').value = details.deliverables;
         if (details.deadline) {
           // Try to parse date if possible
@@ -139,8 +129,12 @@ contract SmartContract {
       // Live preview update
       const updatePreview = () => {
         document.querySelector('.preview-description').textContent = document.getElementById('description').value || '(Your contract description will appear here)';
-        document.querySelector('.preview-from').textContent = (document.getElementById('fromName').value || '(From name)') + ' - ' + (document.getElementById('from').value || '(From wallet address)');
-        document.querySelector('.preview-to').textContent = (document.getElementById('toName').value || '(To name)') + ' - ' + (document.getElementById('to').value || '(To wallet address)');
+        document.querySelector('.preview-from').textContent =
+          (document.getElementById('from').value || '(From name)') + ' - ' +
+          (document.getElementById('fromAddress').value || '(From wallet address)');
+        document.querySelector('.preview-to').textContent =
+          (document.getElementById('to').value || '(To name)') + ' - ' +
+          (document.getElementById('toAddress').value || '(To wallet address)');
         document.querySelector('.preview-deliverables').textContent = document.getElementById('deliverables').value || '(Deliverables will appear here)';
         document.querySelector('.preview-deadline').textContent = document.getElementById('deadline').value || document.getElementById('deadline').placeholder || '(Deadline will appear here)';
         document.querySelector('.preview-payment').textContent = document.getElementById('payment').value || '(Payment terms will appear here)';
@@ -172,14 +166,10 @@ contract SmartContract {
         e.preventDefault();
         const contractDetails = {
           description: document.getElementById('description').value,
-          from: {
-            name: document.getElementById('fromName').value,
-            address: document.getElementById('from').value
-          },
-          to: {
-            name: document.getElementById('toName').value,
-            address: document.getElementById('to').value
-          },
+          from: document.getElementById('from').value,
+          fromAddress: document.getElementById('fromAddress').value,
+          to: document.getElementById('to').value,
+          toAddress: document.getElementById('toAddress').value,
           deliverables: document.getElementById('deliverables').value,
           deadline: document.getElementById('deadline').value,
           payment: document.getElementById('payment').value,
